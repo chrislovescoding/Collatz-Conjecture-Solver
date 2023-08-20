@@ -132,7 +132,7 @@ int main() {
         }
 
     } else {
-        cout << "Dont be an idiot. Ffollow the instructions. Close the program and reopen it to try again\n";
+        cout << "Dont be an idiot. Follow the instructions. Close the program and reopen it to try again\n";
     }
 
     system("pause");
