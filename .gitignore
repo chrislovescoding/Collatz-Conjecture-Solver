@@ -1,0 +1,7 @@
+iterationsOutput/*
+!iterationsOutput/.gitkeep
+numberOutputs/*
+!numberOutputs/.gitkeep
+bin/*
+!bin/.gitkeep
+.vscode
