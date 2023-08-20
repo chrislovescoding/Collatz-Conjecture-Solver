@@ -5,7 +5,6 @@
 #include <fstream>
 #include <vector>
 
-using namespace std;
 using namespace std::chrono;
 
 mpz_class largeExponentCalculator(mpz_class base, mpz_class power) {
@@ -14,9 +13,9 @@ mpz_class largeExponentCalculator(mpz_class base, mpz_class power) {
     return result;
 }
 
-int logic(mpz_class number, string numFileName = "", bool makeNumbersFile = false) {
+int logic(mpz_class number, std::string numFileName = "", bool makeNumbersFile = false) {
     std::ofstream numFile;
-    string output = "";
+    std::string output = "";
     int iterations = 0;
 
     while (number > 1) {
@@ -46,15 +45,15 @@ int logic(mpz_class number, string numFileName = "", bool makeNumbersFile = fals
 }
 
 int main() {
-    string choice;
-    cout << "Would you like to check if the conjecture is true for all numbers, from 0 to a number, or just choose an arbitrarily big number, or do it from a very large number onwards. (1, 2 or 3): ";
-    cin >> choice;
+    std::string choice;
+    std::cout << "Would you like to check if the conjecture is true for all numbers, from 0 to a number, or just choose an arbitrarily big number, or do it from a very large number onwards. (1, 2 or 3): ";
+    std::cin >> choice;
 
     if (choice == "1") {
         long long numberOfIterations;
-        cout << "Enter the number of numbers you want to prove this for (0-whatever your number is): ";
-        cin >> numberOfIterations;
-        string iterFileName = "..\\iterationsOutput\\" + to_string(numberOfIterations)+".txt";
+        std::cout << "Enter the number of numbers you want to prove this for (0-whatever your number is): ";
+        std::cin >> numberOfIterations;
+        std::string iterFileName = "..\\iterationsOutput\\" + std::to_string(numberOfIterations)+".txt";
 
         std::vector<int> iterationsList(numberOfIterations+1, 0);
 
@@ -62,11 +61,11 @@ int main() {
         {
             #pragma omp for schedule(dynamic, 100) nowait
             for (int i = 1; i < numberOfIterations-1; ++i) {
-                mpz_class number(to_string(i));
+                mpz_class number(std::to_string(i));
                 iterationsList[i] = logic(number);
             }
             
-            mpz_class number(to_string(numberOfIterations));
+            mpz_class number(std::to_string(numberOfIterations));
             iterationsList[numberOfIterations] = logic(number);
         }
 
@@ -76,30 +75,30 @@ int main() {
         }
         outFile.close();
 
-        string pythonCommand = "python 3x+1graphvisualiser.py " + iterFileName;
+        std::string pythonCommand = "python 3x+1graphvisualiser.py " + iterFileName;
 
         system(pythonCommand.c_str());
 
-        cout << "You didn't disprove the conjecture this time :( maybe next time :)\n";
-        cout << "The conjecture is true for all numbers from 0 to " << numberOfIterations << "\n";
+        std::cout << "You didn't disprove the conjecture this time :( maybe next time :)\n";
+        std::cout << "The conjecture is true for all numbers from 0 to " << numberOfIterations << "\n";
     }
     else if (choice == "2") {
-        string userEnteredNum;
-        cout << "Enter your big number: ";
-        cin >> userEnteredNum;
+        std::string userEnteredNum;
+        std::cout << "Enter your big number: ";
+        std::cin >> userEnteredNum;
         mpz_class number(userEnteredNum);
-        string fileName = userEnteredNum.substr(0,10) + ".txt";
+        std::string fileName = userEnteredNum.substr(0,10) + ".txt";
         
         logic(number, fileName, true);
 
-        string pythonCommand = "python ..\\src\\3x+1graphvisualiser.py ..\\numberOutputs\\" + fileName;
+        std::string pythonCommand = "python ..\\src\\3x+1graphvisualiser.py ..\\numberOutputs\\" + fileName;
         system(pythonCommand.c_str());
 
-        cout << "Nope. not this time. " << userEnteredNum << " still followed the conjecture.\n";
+        std::cout << "Nope. not this time. " << userEnteredNum << " still followed the conjecture.\n";
     } else if(choice == "3"){
-        string expo;
-        cout<<"Do you want to enter a base and exponent? y/n: ";
-        cin>>expo;
+        std::string expo;
+        std::cout<<"Do you want to enter a base and exponent? y/n: ";
+        std::cin>>expo;
 
         mpz_class starterNumber;
         mpz_class i;
@@ -107,18 +106,18 @@ int main() {
         if (expo=="y"){
             mpz_class base;
             mpz_class exponent;
-            cout<<"Enter the base: ";
-            cin>>base;
-            cout<<"Enter the exponent: ";
-            cin>>exponent;
+            std::cout<<"Enter the base: ";
+            std::cin>>base;
+            std::cout<<"Enter the exponent: ";
+            std::cin>>exponent;
             starterNumber = largeExponentCalculator(base, exponent);
             i = starterNumber;
         } else if (expo == "n"){
-            cout<<"Enter the starting number: ";
-            cin>>starterNumber;
+            std::cout<<"Enter the starting number: ";
+            std::cin>>starterNumber;
             i = starterNumber;
         } else {
-            cout << "Dont be stupid. restart the program and actually type y or n";
+            std::cout << "Dont be stupid. restart the program and actually type y or n";
             system("pause");
         }
 
@@ -126,13 +125,13 @@ int main() {
         while(true){
             logic(i);
             if (i % 100000 == 0){
-                cout << "\r" << "Tested all numbers from " << starterNumber << " up to and including  " <<  i << flush;
+                std::cout << "\r" << "Tested all numbers from " << starterNumber << " up to and including  " <<  i << std::flush;
             }
             ++i;
         }
 
     } else {
-        cout << "Dont be an idiot. Follow the instructions. Close the program and reopen it to try again\n";
+        std::cout << "Dont be an idiot. Follow the instructions. Close the program and reopen it to try again\n";
     }
 
     system("pause");
@@ -151,7 +150,7 @@ int main() {
     // }
     // auto end_time_series = high_resolution_clock::now();
     // auto duration_series = duration_cast<seconds>(end_time_series - start_time_series);
-    // cout << "Duration series: " << duration_series.count() << " seconds" << endl;
+    // std::cout << "Duration series: " << duration_series.count() << " seconds" << endl;
 // //SUMMING
 //     auto start_time_sum = high_resolution_clock::now();
 //     mpz_class sum = largeNumber + 1;
@@ -177,7 +176,7 @@ int main() {
 //     auto duration_quo = duration_cast<nanoseconds>(end_time_quo - start_time_quo);
 //     auto duration_proSHIFT = duration_cast<nanoseconds>(end_time_proSHIFT - start_time_proSHIFT);
 
-//     cout << "Duration sum: " << duration_sum.count() << " nanoseconds" << endl;
-//     cout << "Duration product: " << duration_pro.count() << " nanoseconds" << endl;
-//     cout << "Duration quotient: " << duration_quo.count() << " nanoseconds" << endl;
-//     cout << "Duration product using shift: " << duration_proSHIFT.count() << " nanoseconds" << endl;
+//     std::cout << "Duration sum: " << duration_sum.count() << " nanoseconds" << endl;
+//     std::cout << "Duration product: " << duration_pro.count() << " nanoseconds" << endl;
+//     std::cout << "Duration quotient: " << duration_quo.count() << " nanoseconds" << endl;
+//     std::cout << "Duration product using shift: " << duration_proSHIFT.count() << " nanoseconds" << endl;
