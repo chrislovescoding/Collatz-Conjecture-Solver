@@ -46,11 +46,11 @@ int logic(mpz_class number, string numFileName = "", bool makeNumbersFile = fals
 }
 
 int main() {
-    string iterOrBigNum;
-    cout << "Would you like to check if the conjecture is true for all numbers, from 0 to a number, or just choose an arbitrarily big number, or do it from a number to a number. (1, 2 or 3): ";
-    cin >> iterOrBigNum;
+    string choice;
+    cout << "Would you like to check if the conjecture is true for all numbers, from 0 to a number, or just choose an arbitrarily big number, or do it from a very large number onwards. (1, 2 or 3): ";
+    cin >> choice;
 
-    if (iterOrBigNum == "1") {
+    if (choice == "1") {
         long long numberOfIterations;
         cout << "Enter the number of numbers you want to prove this for (0-whatever your number is): ";
         cin >> numberOfIterations;
@@ -83,7 +83,7 @@ int main() {
         cout << "You didn't disprove the conjecture this time :( maybe next time :)\n";
         cout << "The conjecture is true for all numbers from 0 to " << numberOfIterations << "\n";
     }
-    else if (iterOrBigNum == "2") {
+    else if (choice == "2") {
         string userEnteredNum;
         cout << "Enter your big number: ";
         cin >> userEnteredNum;
@@ -96,7 +96,7 @@ int main() {
         system(pythonCommand.c_str());
 
         cout << "Nope. not this time. " << userEnteredNum << " still followed the conjecture.\n";
-    } else if(iterOrBigNum == "3"){
+    } else if(choice == "3"){
         string expo;
         cout<<"Do you want to enter a base and exponent? y/n: ";
         cin>>expo;
@@ -131,15 +131,8 @@ int main() {
             ++i;
         }
 
-    } else if(iterOrBigNum == "69"){
-        mpz_class base("8008135");
-        mpz_class power("69420");
-
-        //cout<<largeExponentCalculator(base, power);
-        logic(largeExponentCalculator(base, power), "69", true);
-        cout<<"unfortunately this follows the conjecture sorry alex. \n";
     } else {
-        cout << "Dont be an idiot. put 1 or 2. close the program and reopen it\n";
+        cout << "Dont be an idiot. Ffollow the instructions. Close the program and reopen it to try again\n";
     }
 
     system("pause");
